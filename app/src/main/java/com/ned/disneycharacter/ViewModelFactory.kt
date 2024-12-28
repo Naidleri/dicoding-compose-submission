@@ -3,13 +3,15 @@ package com.ned.disneycharacter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ned.disneycharacter.data.remote.CharactersRepository
+import com.ned.disneycharacter.ui.presentation.home.HomeViewModel
 
-/*
-class ViewModelFactory (private val repository: CharactersRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(CharacterViewModel::class.java)) {
-            return CharacterViewModel(repository) as T
+class ViewModelFactory (private val repository: CharactersRepository) :
+    ViewModelProvider.NewInstanceFactory() {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}*/
+}
