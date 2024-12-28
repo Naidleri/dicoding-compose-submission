@@ -8,6 +8,6 @@ interface ApiService {
     @GET("character")
     suspend fun getCharacters(
         @Query("page") page: Int,
-        @Query("size") size: Int
+        @Query("pageSize") size: Int
     ): CharacterResponse
 }

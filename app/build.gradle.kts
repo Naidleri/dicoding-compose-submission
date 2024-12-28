@@ -62,5 +62,9 @@ dependencies {
     implementation (libs.converter.gson)
     implementation (libs.androidx.paging.runtime.ktx)
     implementation (libs.coil.compose)
-
+    implementation (libs.androidx.navigation.compose)
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+    implementation (libs.androidx.lifecycle.runtime.ktx)
+    implementation (libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.paging.compose)
 }

@@ -36,7 +36,7 @@ data class DataItem(
 	val createdAt: String,
 
 	@field:SerializedName("imageUrl")
-	val imageUrl: String,
+	val imageUrl: String?,
 
 	@field:SerializedName("__v")
 	val v: Int,

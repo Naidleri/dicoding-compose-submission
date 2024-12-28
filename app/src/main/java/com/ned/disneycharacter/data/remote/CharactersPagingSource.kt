@@ -14,15 +14,21 @@ class CharactersPagingSource(private val apiService: ApiService) : PagingSource<
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataItem> {
-        val position = params.key ?: 1
         return try {
-            val response = apiService.getCharacters(page = position,size = params.loadSize)
-            val characters = response.data
+            val position = params.key ?: 1
+            val response = apiService.getCharacters(page = position, size = params.loadSize)
+
+            val nextPage = response.info.nextPage?.let { url ->
+                url.substringAfter("page=").substringBefore("&").toIntOrNull()
+            }
+            val prevPage = response.info.previousPage?.let { url ->
+                url.substringAfter("page=").substringBefore("&").toIntOrNull()
+            }
 
             LoadResult.Page(
-                data = characters,
-                prevKey = if (position == 1) null else position - 1,
-                nextKey = if (characters.isEmpty()) null else position + 1
+                data = response.data,
+                prevKey = prevPage,
+                nextKey = nextPage
             )
         } catch (exception: Exception) {
             LoadResult.Error(exception)

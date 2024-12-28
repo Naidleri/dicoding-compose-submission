@@ -8,13 +8,13 @@ import kotlinx.parcelize.Parcelize
 data class Info(
 
 	@field:SerializedName("previousPage")
-	val previousPage: String,
+	val previousPage: String?,
 
 	@field:SerializedName("nextPage")
-	val nextPage: String,
+	val nextPage: String?,
 
 	@field:SerializedName("totalPages")
-	val totalPages: Int,
+	val totalPages: Int?,
 
 	@field:SerializedName("count")
 	val count: Int
