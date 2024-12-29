@@ -4,4 +4,6 @@
     <string name="menu_favorite">Favorite</string>
     <string name="menu_profile">Profile</string>
     <string name="back">Back</string>
+    <string name="name_profile">Haris Firman Ardiansyah</string>
+    <string name="email_profile">harisfirman387@gmail.com</string>
 </resources>
