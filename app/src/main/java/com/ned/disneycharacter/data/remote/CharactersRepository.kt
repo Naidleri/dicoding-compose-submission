@@ -1,5 +1,6 @@
 package com.ned.disneycharacter.data.remote
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -17,6 +18,12 @@ class CharactersRepository (private val apiService: ApiService) {
            ),
            pagingSourceFactory = { CharactersPagingSource(apiService) }
        ).flow
+    }
+
+    suspend fun getCharacterById(id: Int) : DataItem {
+        val response = apiService.getCharacterById(id)
+        Log.d("CharactersRepository", "Response: ${response.data}")
+        return response.data
     }
 
     companion object {

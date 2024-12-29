@@ -9,37 +9,37 @@ import kotlinx.parcelize.RawValue
 data class DataItem(
 
 	@field:SerializedName("parkAttractions")
-	val parkAttractions: List<String>,
+	val parkAttractions: List<String>?,
 
 	@field:SerializedName("films")
-	val films: List<String>,
+	val films: List<String>?,
 
 	@field:SerializedName("shortFilms")
-	val shortFilms: List<String>,
+	val shortFilms: List<String>?,
 
 	@field:SerializedName("tvShows")
-	val tvShows: List<String>,
+	val tvShows: List<String>?,
 
 	@field:SerializedName("enemies")
 	val enemies: @RawValue List<Any>,
 
 	@field:SerializedName("url")
-	val url: String,
+	val url: String?,
 
 	@field:SerializedName("videoGames")
-	val videoGames: List<String>,
+	val videoGames: List<String>?,
 
 	@field:SerializedName("sourceUrl")
-	val sourceUrl: String,
+	val sourceUrl: String?,
 
 	@field:SerializedName("createdAt")
-	val createdAt: String,
+	val createdAt: String?,
 
 	@field:SerializedName("imageUrl")
 	val imageUrl: String?,
 
 	@field:SerializedName("__v")
-	val v: Int,
+	val v: Int?,
 
 	@field:SerializedName("name")
 	val name: String,
@@ -48,8 +48,8 @@ data class DataItem(
 	val id: Int,
 
 	@field:SerializedName("allies")
-	val allies:@RawValue List<Any>,
+	val allies:@RawValue List<Any>?,
 
 	@field:SerializedName("updatedAt")
-	val updatedAt: String
+	val updatedAt: String?
 ) : Parcelable

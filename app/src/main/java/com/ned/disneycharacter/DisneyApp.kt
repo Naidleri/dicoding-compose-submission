@@ -18,13 +18,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.compose.AppTheme
 import com.ned.disneycharacter.ui.navigation.NavigationItem
 import com.ned.disneycharacter.ui.navigation.Screen
+import com.ned.disneycharacter.ui.presentation.detailchar.DetailChar
 import com.ned.disneycharacter.ui.presentation.favorite.FavoriteScreen
 import com.ned.disneycharacter.ui.presentation.home.HomeScreen
 import com.ned.disneycharacter.ui.presentation.profile.ProfileScreen
@@ -51,7 +54,16 @@ fun DisneyApp(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                HomeScreen()
+                HomeScreen(
+                    navigateToDetail = { characterId -> navController.navigate(Screen.Detail.createRoute(characterId)) }
+                )
+            }
+            composable (
+                route = Screen.Detail.route,
+                arguments = listOf(navArgument("characterId") { type = NavType.IntType })
+            ) {
+                val id = it.arguments?.getInt("characterId") ?: 0
+                DetailChar(id, navigateBack = { navController.navigateUp() })
             }
             composable(Screen.Favorite.route) {
                 FavoriteScreen()

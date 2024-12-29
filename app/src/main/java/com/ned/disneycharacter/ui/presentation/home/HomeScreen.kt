@@ -1,6 +1,7 @@
 package com.ned.disneycharacter.ui.presentation.home
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,17 +31,15 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(Injection.CharacterInjectionRepository())
-    )
+    ),
+    navigateToDetail: (Int) -> Unit
 ) {
     val characters = viewModel.characters.collectAsLazyPagingItems()
 
-    characters.itemSnapshotList.forEachIndexed { index, dataItem ->
-        Log.d("HomeScreen", "Item at index $index: $dataItem")
-    }
-
     HomeContent(
         character = characters,
-        modifier = modifier
+        modifier = modifier,
+        navigateToDetail = navigateToDetail
     )
 }
 
@@ -48,15 +47,11 @@ fun HomeScreen(
 fun HomeContent(
     character: LazyPagingItems<DataItem>,
     modifier: Modifier = Modifier,
+    navigateToDetail: (Int) -> Unit
 ) {
     val loadState = character.loadState
     Log.d("HomeContent", "LoadState refresh: ${loadState.refresh}")
     Log.d("HomeContent", "LoadState append: ${loadState.append}")
-    Log.d("HomeContent", "LazyPagingItems item count: ${character.itemCount}")
-    for (index in 0 until character.itemCount) {
-        val item = character[index]
-        Log.d("HomeContent", "Item at index $index: $item")
-    }
 
     when {
         loadState.refresh is LoadState.Loading -> {
@@ -79,7 +74,10 @@ fun HomeContent(
                     item?.let {
                         CharacterItem(
                             image = it.imageUrl,
-                            name = it.name
+                            name = it.name,
+                            modifier = Modifier.clickable {
+                                navigateToDetail(it.id)
+                            }
                         )
                     }
                 }
