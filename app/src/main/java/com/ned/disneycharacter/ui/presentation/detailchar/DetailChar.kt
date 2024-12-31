@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -36,6 +37,7 @@ import com.ned.disneycharacter.ViewModelFactory
 import com.ned.disneycharacter.injection.Injection
 import com.ned.disneycharacter.ui.common.UiState
 import com.ned.disneycharacter.ui.component.CharacterSection
+import com.ned.disneycharacter.ui.component.FavoriteButton
 
 @Composable
 fun DetailChar(
@@ -48,24 +50,41 @@ fun DetailChar(
    navigateBack: () -> Unit
 ) {
     Log.d("DetailChar", "Received charId: $charId")
-    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-        when (uiState) {
-            is UiState.Loading -> {
-                viewModel.getCharacterById(charId)
-            }
-            is UiState.Success -> {
-                DetailCharContent(
-                    image = uiState.data.imageUrl ?: "",
-                    name = uiState.data.name,
-                    films = uiState.data.films,
-                    tvShows = uiState.data.tvShows,
-                    shortFilms = uiState.data.shortFilms,
-                    videoGames = uiState.data.videoGames,
-                    onBackClick = navigateBack
+    val uiState by viewModel.uiState.collectAsState()
+    val isFavorite by viewModel.isFavorite.collectAsState()
+
+   when (uiState) {
+        is UiState.Loading -> {
+            viewModel.getCharacterById(charId)
+        }
+        is UiState.Success -> {
+            val character = (uiState as UiState.Success).data
+            DetailCharContent(
+                image = character.imageUrl,
+                name = character.name,
+                films = character.films,
+                tvShows = character.tvShows,
+                shortFilms = character.shortFilms,
+                videoGames = character.videoGames,
+                favorite = isFavorite,
+                onBackClick = navigateBack,
+                onFavoriteClick = {
+                    if (isFavorite) {
+                        viewModel.deleteCharacterFromFavorites(charId)
+                    } else {
+                        viewModel.saveCharacterToFavorites(character)
+                    }
+                }
+            )
+        }
+        is UiState.Error -> {
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    text = "Error fetch data",
+                    modifier = Modifier.padding(16.dp)
                 )
-            }
-            is UiState.Error -> {
-                Log.e("DetailChar", "Error loading character data")
             }
         }
     }
@@ -73,13 +92,15 @@ fun DetailChar(
 
 @Composable
 fun DetailCharContent(
-    image: String,
+    image: String?,
     name: String,
     films: List<String>?,
     tvShows: List<String>?,
     shortFilms: List<String>?,
     videoGames: List<String>?,
+    favorite: Boolean,
     onBackClick: () -> Unit = {},
+    onFavoriteClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
@@ -142,6 +163,13 @@ fun DetailCharContent(
             items = videoGames,
             emptyMessage = "Tidak ada info video game dari karakter ini"
         )
+        FavoriteButton(
+            text = if (favorite) stringResource(R.string.already_favorite) else stringResource(R.string.add_favorite),
+            onClick = onFavoriteClick,
+            isFavorite = favorite,
+            modifier = Modifier
+                .padding(16.dp)
+        )
     }
 }
 
@@ -159,6 +187,7 @@ private fun DetailContentPrev() {
             tvShows = listOf("The Mickey Mouse Club", "Mickey Mouse Works"),
             shortFilms = listOf("Steamboat Willie", "Plane Crazy"),
             videoGames = listOf("Kingdom Hearts", "Disney Infinity"),
+            favorite = false
         )
     }
 }
