@@ -5,9 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -15,18 +19,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -37,13 +35,14 @@ import com.ned.disneycharacter.R
 import com.ned.disneycharacter.ViewModelFactory
 import com.ned.disneycharacter.injection.Injection
 import com.ned.disneycharacter.ui.common.UiState
+import com.ned.disneycharacter.ui.component.CharacterSection
 
 @Composable
 fun DetailChar(
     charId: Int,
     viewModel: DetailCharViewModel = viewModel(
         factory = ViewModelFactory(
-            Injection.CharacterInjectionRepository()
+            Injection.CharacterInjectionRepository(context = LocalContext.current)
         )
     ),
    navigateBack: () -> Unit
@@ -83,10 +82,12 @@ fun DetailCharContent(
     onBackClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    Column (
+    val scrollState = rememberScrollState()
+    Column(
         modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
     ) {
-        var imageSize by remember { mutableStateOf(IntSize.Zero) }
         Box {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -98,8 +99,8 @@ fun DetailCharContent(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .onSizeChanged { imageSize = it },
-                contentScale = ContentScale.Fit
+                    .aspectRatio(1.78f),
+                contentScale = ContentScale.FillWidth
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -117,7 +118,7 @@ fun DetailCharContent(
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             fontSize = 32.sp,
-            color =  MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .padding(16.dp)
         )
@@ -125,7 +126,6 @@ fun DetailCharContent(
             title = "Films",
             items = films,
             emptyMessage = "Tidak ada info film dari karakter ini"
-
         )
         CharacterSection(
             title = "TV Shows",
@@ -142,46 +142,6 @@ fun DetailCharContent(
             items = videoGames,
             emptyMessage = "Tidak ada info video game dari karakter ini"
         )
-    }
-}
-
-@Composable
-fun CharacterSection(
-    title: String,
-    items: List<String>?,
-    emptyMessage: String,
-) {
-    if (!items.isNullOrEmpty()) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color =  MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
-
-        )
-        items.forEach { item ->
-            Text(
-                text = item,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-    } else {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color =  MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
-        )
-        Text(
-            text = emptyMessage,
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

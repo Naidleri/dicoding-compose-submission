@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
@@ -30,7 +31,7 @@ import com.ned.disneycharacter.ui.component.CharacterItem
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(
-        factory = ViewModelFactory(Injection.CharacterInjectionRepository())
+        factory = ViewModelFactory(Injection.CharacterInjectionRepository(context = LocalContext.current))
     ),
     navigateToDetail: (Int) -> Unit
 ) {

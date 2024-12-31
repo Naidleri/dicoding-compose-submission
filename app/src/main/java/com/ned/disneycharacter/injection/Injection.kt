@@ -1,11 +1,15 @@
 package com.ned.disneycharacter.injection
 
+import android.content.Context
+import com.ned.disneycharacter.data.local.room.CharactersDatabase
 import com.ned.disneycharacter.data.remote.CharactersRepository
 import com.ned.disneycharacter.data.remote.network.ApiConfig
 
 object Injection {
-    fun CharacterInjectionRepository () : CharactersRepository {
+    fun CharacterInjectionRepository (context: Context) : CharactersRepository {
         val apiService = ApiConfig.getApiService()
-        return CharactersRepository.getInstance(apiService)
+        val database = CharactersDatabase.getInstance(context)
+        val dao = database.charactersDao()
+        return CharactersRepository.getInstance(apiService,dao)
     }
 }
