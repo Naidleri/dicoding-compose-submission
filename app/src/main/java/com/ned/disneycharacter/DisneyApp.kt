@@ -66,7 +66,9 @@ fun DisneyApp(
                 DetailChar(id, navigateBack = { navController.navigateUp() })
             }
             composable(Screen.Favorite.route) {
-                FavoriteScreen()
+                FavoriteScreen(
+                    navigateToDetail = { characterId -> navController.navigate(Screen.Detail.createRoute(characterId)) }
+                )
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()

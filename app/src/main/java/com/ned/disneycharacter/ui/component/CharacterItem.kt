@@ -29,7 +29,7 @@ import com.ned.disneycharacter.R
 fun CharacterItem(
     image: String?,
     name: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier
