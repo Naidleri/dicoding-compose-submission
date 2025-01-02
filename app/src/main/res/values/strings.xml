@@ -8,4 +8,5 @@
     <string name="email_profile">harisfirman387@gmail.com</string>
     <string name="add_favorite">Tambah Character ke Favorite</string>
     <string name="already_favorite">Hapus Dari Favorite</string>
+    <string name="search_placeholder">Cari karakter Disney …</string>
 </resources>

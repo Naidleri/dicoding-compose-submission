@@ -17,4 +17,9 @@ interface ApiService {
     suspend fun getCharacterById(
         @Path("id") id: Int
     ): CharacterDetailResponse
+
+    @GET("character")
+    suspend fun searchCharacterByName(
+        @Query("name") name: String
+    ): CharacterResponse
 }

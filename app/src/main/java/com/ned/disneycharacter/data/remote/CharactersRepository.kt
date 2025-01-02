@@ -9,6 +9,8 @@ import com.ned.disneycharacter.data.local.room.CharactersDao
 import com.ned.disneycharacter.data.remote.network.ApiService
 import com.ned.disneycharacter.data.remote.response.DataItem
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 
 class CharactersRepository (
     private val apiService: ApiService,
@@ -31,6 +33,13 @@ class CharactersRepository (
         return response.data
     }
 
+    fun searchCharacterByName(name: String) : Flow<List<DataItem>> = flow {
+        val response = apiService.searchCharacterByName(name)
+        emit(response.data)
+    }.catch { e ->
+        Log.e("CharactersRepository", "Error searching character: ${e.message}")
+        throw e
+    }
     suspend fun insertFavoriteCharacters(characters:DataItem) {
         val characterEntity = CharactersEntity(
             id = characters.id,

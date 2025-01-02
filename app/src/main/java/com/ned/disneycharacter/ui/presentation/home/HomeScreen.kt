@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +32,7 @@ import com.ned.disneycharacter.ViewModelFactory
 import com.ned.disneycharacter.data.remote.response.DataItem
 import com.ned.disneycharacter.injection.Injection
 import com.ned.disneycharacter.ui.component.CharacterItem
+import com.ned.disneycharacter.ui.component.SearchBar
 
 @Composable
 fun HomeScreen(
@@ -36,12 +43,56 @@ fun HomeScreen(
     navigateToDetail: (Int) -> Unit
 ) {
     val characters = viewModel.characters.collectAsLazyPagingItems()
+    val query by viewModel.query.collectAsState()
+    val searchResults by viewModel.searchResults.collectAsState()
 
-    HomeContent(
-        character = characters,
-        modifier = modifier,
-        navigateToDetail = navigateToDetail
-    )
+    Column(
+        modifier = Modifier
+    ) {
+        SearchBar(
+            query = query,
+            onQueryChange = viewModel::updateQuery,
+            modifier = Modifier
+        )
+
+        when {
+            query.isBlank() -> {
+                HomeContent(
+                    character = characters,
+                    modifier = modifier,
+                    navigateToDetail = navigateToDetail
+                )
+            }
+            searchResults.isNotEmpty() -> {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(160.dp),
+                    contentPadding = PaddingValues(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = modifier
+                ) {
+                    items(searchResults.size) { index ->
+                        val item = searchResults[index]
+                        CharacterItem(
+                            image = item.imageUrl,
+                            name = item.name,
+                            modifier = Modifier.clickable {
+                                navigateToDetail(item.id)
+                            }
+                        )
+                    }
+                }
+            }
+            else -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = "Tidak ada karakter")
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -51,6 +102,7 @@ fun HomeContent(
     navigateToDetail: (Int) -> Unit
 ) {
     val loadState = character.loadState
+
     Log.d("HomeContent", "LoadState refresh: ${loadState.refresh}")
     Log.d("HomeContent", "LoadState append: ${loadState.append}")
 
@@ -111,6 +163,7 @@ fun HomeContent(
             }
         }
     }
+
 }
 
 @Composable
