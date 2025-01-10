@@ -1,7 +1,7 @@
-package com.ned.disneycharacter.data.remote.network
+package com.ned.core.data.remote.network
 
-import com.ned.disneycharacter.data.remote.response.CharacterDetailResponse
-import com.ned.disneycharacter.data.remote.response.CharacterResponse
+import com.ned.core.data.remote.response.CharacterDetailResponse
+import com.ned.core.data.remote.response.CharacterResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

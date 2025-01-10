@@ -1,4 +1,4 @@
-package com.ned.disneycharacter.utils
+package com.ned.core.utils
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

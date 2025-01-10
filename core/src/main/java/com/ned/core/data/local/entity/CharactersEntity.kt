@@ -1,4 +1,4 @@
-package com.ned.disneycharacter.data.local.entity
+package com.ned.core.data.local.entity
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

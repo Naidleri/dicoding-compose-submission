@@ -1,4 +1,4 @@
-package com.ned.disneycharacter.data.remote.network
+package com.ned.core.data.remote.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,10 +1,10 @@
-package com.ned.disneycharacter.data.local.room
+package com.ned.core.data.local.room
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ned.disneycharacter.data.local.entity.CharactersEntity
+import com.ned.core.data.local.entity.CharactersEntity
 
 @Dao
 interface CharactersDao {

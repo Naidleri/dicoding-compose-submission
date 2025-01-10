@@ -1,12 +1,12 @@
-package com.ned.disneycharacter.data.local.room
+package com.ned.core.data.local.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.ned.disneycharacter.data.local.entity.CharactersEntity
-import com.ned.disneycharacter.utils.Converters
+import com.ned.core.data.local.entity.CharactersEntity
+import com.ned.core.utils.Converters
 
 @Database(entities = [CharactersEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)

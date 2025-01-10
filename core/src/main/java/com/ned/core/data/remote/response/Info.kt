@@ -1,4 +1,4 @@
-package com.ned.disneycharacter.data.remote.response
+package com.ned.core.data.remote.response
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
