@@ -5,21 +5,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.ned.disneycharacter.data.remote.CharactersRepository
-import com.ned.disneycharacter.data.remote.response.DataItem
+import com.ned.core.domain.model.Character
+import com.ned.core.domain.usecase.CharacterUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: CharactersRepository) : ViewModel() {
+class HomeViewModel(private val characterUseCase: CharacterUseCase) : ViewModel() {
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query
 
-    private val _searchResults = MutableStateFlow<List<DataItem>>(emptyList())
-    val searchResults: StateFlow<List<DataItem>> = _searchResults
+    private val _searchResults = MutableStateFlow<List<Character>>(emptyList())
+    val searchResults: StateFlow<List<Character>> = _searchResults
 
-    val characters: Flow<PagingData<DataItem>> = repository
+    val characters: Flow<PagingData<Character>> = characterUseCase
         .getCharacters()
         .cachedIn(viewModelScope)
 
@@ -32,7 +32,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
 
         viewModelScope.launch {
             try {
-                repository.searchCharacterByName(newQuery)
+                characterUseCase.searchCharacterByName(newQuery)
                     .collect { character ->
                         _searchResults.value = character
                     }

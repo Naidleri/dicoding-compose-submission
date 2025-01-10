@@ -2,23 +2,23 @@ package com.ned.disneycharacter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.ned.disneycharacter.data.remote.CharactersRepository
+import com.ned.core.domain.usecase.CharacterUseCase
 import com.ned.disneycharacter.ui.presentation.detailchar.DetailCharViewModel
 import com.ned.disneycharacter.ui.presentation.favorite.FavoriteViewModel
 import com.ned.disneycharacter.ui.presentation.home.HomeViewModel
 
-class ViewModelFactory (private val repository: CharactersRepository) :
+class ViewModelFactory (private val characterUseCase: CharacterUseCase) :
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(repository) as T
+            return HomeViewModel(characterUseCase) as T
         }
         if (modelClass.isAssignableFrom(DetailCharViewModel::class.java)) {
-            return DetailCharViewModel(repository) as T
+            return DetailCharViewModel(characterUseCase) as T
         }
         if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
-            return FavoriteViewModel(repository) as T
+            return FavoriteViewModel(characterUseCase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

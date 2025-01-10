@@ -34,7 +34,7 @@ import coil.request.ImageRequest
 import com.example.compose.AppTheme
 import com.ned.disneycharacter.R
 import com.ned.disneycharacter.ViewModelFactory
-import com.ned.disneycharacter.injection.Injection
+import com.ned.core.injection.Injection
 import com.ned.disneycharacter.ui.common.UiState
 import com.ned.disneycharacter.ui.component.CharacterSection
 import com.ned.disneycharacter.ui.component.FavoriteButton
@@ -44,7 +44,7 @@ fun DetailChar(
     charId: Int,
     viewModel: DetailCharViewModel = viewModel(
         factory = ViewModelFactory(
-            Injection.CharacterInjectionRepository(context = LocalContext.current)
+            Injection.provideCharacterUseCase(context = LocalContext.current)
         )
     ),
    navigateBack: () -> Unit
@@ -60,7 +60,7 @@ fun DetailChar(
         is UiState.Success -> {
             val character = (uiState as UiState.Success).data
             DetailCharContent(
-                image = character.imageUrl,
+                image = character.image,
                 name = character.name,
                 films = character.films,
                 tvShows = character.tvShows,

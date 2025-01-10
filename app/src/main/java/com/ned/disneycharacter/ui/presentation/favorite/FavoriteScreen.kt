@@ -17,8 +17,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ned.disneycharacter.ViewModelFactory
-import com.ned.disneycharacter.data.local.entity.CharactersEntity
-import com.ned.disneycharacter.injection.Injection
+import com.ned.core.domain.model.Character
+import com.ned.core.injection.Injection
 import com.ned.disneycharacter.ui.common.UiState
 import com.ned.disneycharacter.ui.component.CharacterItem
 
@@ -26,7 +26,7 @@ import com.ned.disneycharacter.ui.component.CharacterItem
 fun FavoriteScreen(
     modifier: Modifier = Modifier,
     viewModel: FavoriteViewModel = viewModel(
-        factory = ViewModelFactory(Injection.CharacterInjectionRepository(context = LocalContext.current))
+        factory = ViewModelFactory(Injection.provideCharacterUseCase(context = LocalContext.current))
     ),
     navigateToDetail: (Int) -> Unit
 ) {
@@ -64,7 +64,7 @@ fun FavoriteScreen(
 
 @Composable
 fun FavoriteContent(
-    character: List<CharactersEntity>,
+    character: List<Character>,
     modifier: Modifier = Modifier,
     navigateToDetail: (Int) -> Unit
 ) {

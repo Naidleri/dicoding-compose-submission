@@ -16,9 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,8 +26,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ned.disneycharacter.ViewModelFactory
-import com.ned.disneycharacter.data.remote.response.DataItem
-import com.ned.disneycharacter.injection.Injection
+import com.ned.core.domain.model.Character
+import com.ned.core.injection.Injection
 import com.ned.disneycharacter.ui.component.CharacterItem
 import com.ned.disneycharacter.ui.component.SearchBar
 
@@ -38,7 +35,7 @@ import com.ned.disneycharacter.ui.component.SearchBar
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(
-        factory = ViewModelFactory(Injection.CharacterInjectionRepository(context = LocalContext.current))
+        factory = ViewModelFactory(Injection.provideCharacterUseCase(context = LocalContext.current))
     ),
     navigateToDetail: (Int) -> Unit
 ) {
@@ -74,7 +71,7 @@ fun HomeScreen(
                     items(searchResults.size) { index ->
                         val item = searchResults[index]
                         CharacterItem(
-                            image = item.imageUrl,
+                            image = item.image,
                             name = item.name,
                             modifier = Modifier.clickable {
                                 navigateToDetail(item.id)
@@ -97,7 +94,7 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(
-    character: LazyPagingItems<DataItem>,
+    character: LazyPagingItems<Character>,
     modifier: Modifier = Modifier,
     navigateToDetail: (Int) -> Unit
 ) {
@@ -126,7 +123,7 @@ fun HomeContent(
                     val item = character[index]
                     item?.let {
                         CharacterItem(
-                            image = it.imageUrl,
+                            image = it.image,
                             name = it.name,
                             modifier = Modifier.clickable {
                                 navigateToDetail(it.id)
