@@ -63,7 +63,7 @@ object CharacterMapper {
             allies = allies,
             enemies = enemies,
             v = __v,
-            favorite = favorite
+            favorite = true
         )
     }
 }
