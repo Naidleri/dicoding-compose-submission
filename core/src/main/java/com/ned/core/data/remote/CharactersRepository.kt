@@ -12,7 +12,10 @@ import com.ned.core.utils.CharacterMapper.toDomain
 import com.ned.core.utils.CharacterMapper.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+
 
 class CharactersRepository (
     private val apiService: ApiService,
@@ -29,11 +32,14 @@ class CharactersRepository (
        ).flow
     }
 
-    override suspend fun getCharacterById(id: Int) : Character {
+    override fun getCharacterById(id: Int): Flow<Character> = flow {
         val response = apiService.getCharacterById(id)
-        Log.d("CharactersRepository", "Response: ${response.data}")
-        return response.data.toDomain()
+        emit(response.data.toDomain())
+    }.catch { e ->
+        Log.e("CharactersRepository", "Error fetching character by ID: ${e.message}")
+        throw e
     }
+
 
     override fun searchCharacterByName(name: String) : Flow<List<Character>> = flow {
         val response = apiService.searchCharacterByName(name)
@@ -48,15 +54,16 @@ class CharactersRepository (
         charDao.insertAll(listOf(characters.toEntity()))
     }
 
-    override suspend fun getFavoriteCharacters(): List<Character> {
-        return charDao.getAllCharacters().map { it.toDomain() }
-    }
+        override fun getFavoriteCharacters(): Flow<List<Character>> {
+            return charDao.getAllCharacters().map { list ->
+                list.map { it.toDomain() }
+            }
+        }
 
-    override suspend fun isFavoriteCharacter(id: Int): Boolean {
-        val character = charDao.getCharacterById(id)
-        return character != null
-    }
-
+        override suspend fun isFavoriteCharacter(id: Int): Boolean {
+            val character = charDao.getCharacterById(id).firstOrNull()
+            return character?.favorite == true
+        }
 
     override suspend fun deleteFavoriteCharacter(id: Int) {
         try {

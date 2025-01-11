@@ -17,13 +17,11 @@ object Injection {
     }
 
     fun provideCharacterUseCase(context: Context): CharacterUseCase {
-        // Membuat repository
         val apiService = ApiConfig.getApiService()
         val database = CharactersDatabase.getInstance(context)
         val dao = database.charactersDao()
         val repository = CharactersRepository.getInstance(apiService, dao)
 
-        // Membuat use case dengan repository
         return CharacterInteractor(repository)
     }
 }

@@ -10,7 +10,7 @@ class CharacterInteractor (private val characterRepository: ICharacterRepository
         return characterRepository.getCharacters()
     }
 
-    override suspend fun getCharacterById(id: Int): Character {
+    override fun getCharacterById(id: Int): Flow<Character> {
         return characterRepository.getCharacterById(id)
     }
 
@@ -22,7 +22,7 @@ class CharacterInteractor (private val characterRepository: ICharacterRepository
         return characterRepository.insertFavoriteCharacters(characters)
     }
 
-    override suspend fun getFavoriteCharacters(): List<Character> {
+    override  fun getFavoriteCharacters(): Flow<List<Character>> {
         return characterRepository.getFavoriteCharacters()
     }
 

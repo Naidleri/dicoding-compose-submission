@@ -6,10 +6,10 @@ import com.ned.core.domain.model.Character
 
 interface CharacterUseCase {
     fun getCharacters(): Flow<PagingData<Character>>
-    suspend fun getCharacterById(id: Int): Character
+    fun getCharacterById(id: Int): Flow<Character>
     fun searchCharacterByName(name: String): Flow<List<Character>>
     suspend fun insertFavoriteCharacters(characters: Character)
-    suspend fun getFavoriteCharacters(): List<Character>
+    fun getFavoriteCharacters(): Flow<List<Character>>
     suspend fun isFavoriteCharacter(id: Int): Boolean
     suspend fun deleteFavoriteCharacter(id: Int)
 }

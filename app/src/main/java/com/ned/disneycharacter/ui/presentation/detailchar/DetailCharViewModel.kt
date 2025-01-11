@@ -8,6 +8,7 @@ import com.ned.core.domain.usecase.CharacterUseCase
 import com.ned.disneycharacter.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class DetailCharViewModel (
@@ -25,11 +26,11 @@ class DetailCharViewModel (
             _uiState.value = UiState.Loading
             try {
                 Log.d("DetailCharViewModel", "Fetching character with id: $id")
-                val dataItem = characterUseCase.getCharacterById(id)
+
+                val dataItem = characterUseCase.getCharacterById(id).first()
                 Log.d("DetailCharViewModel", "Received data: $dataItem")
                 _uiState.value = UiState.Success(dataItem)
 
-                // Check favorite status after loading character
                 val isFav = characterUseCase.isFavoriteCharacter(id)
                 Log.d("DetailCharViewModel", "Is Favorite: $isFav")
                 _isFavorite.value = isFav
@@ -40,6 +41,7 @@ class DetailCharViewModel (
             }
         }
     }
+
 
 
     fun saveCharacterToFavorites(character: Character) {
