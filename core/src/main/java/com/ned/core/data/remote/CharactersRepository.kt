@@ -73,14 +73,4 @@ class CharactersRepository (
             throw e
         }
     }
-
-    companion object {
-        @Volatile
-        private var instance: CharactersRepository? = null
-
-        fun getInstance(apiService:ApiService, charDao: CharactersDao): CharactersRepository =
-            instance ?: synchronized(this) {
-                instance ?: CharactersRepository(apiService, charDao).also { instance = it }
-            }.also { instance = it }
-    }
 }

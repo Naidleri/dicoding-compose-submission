@@ -28,26 +28,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.compose.AppTheme
 import com.ned.disneycharacter.R
-import com.ned.disneycharacter.ViewModelFactory
-import com.ned.core.injection.Injection
 import com.ned.disneycharacter.ui.common.UiState
 import com.ned.disneycharacter.ui.component.CharacterSection
 import com.ned.disneycharacter.ui.component.FavoriteButton
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailChar(
     charId: Int,
-    viewModel: DetailCharViewModel = viewModel(
-        factory = ViewModelFactory(
-            Injection.provideCharacterUseCase(context = LocalContext.current)
-        )
-    ),
-   navigateBack: () -> Unit
+    viewModel: DetailCharViewModel = koinViewModel(),
+    navigateBack: () -> Unit
 ) {
     Log.d("DetailChar", "Received charId: $charId")
     val uiState by viewModel.uiState.collectAsState()

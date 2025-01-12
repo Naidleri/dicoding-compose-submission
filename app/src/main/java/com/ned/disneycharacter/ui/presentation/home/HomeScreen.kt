@@ -19,24 +19,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.ned.disneycharacter.ViewModelFactory
 import com.ned.core.domain.model.Character
-import com.ned.core.injection.Injection
 import com.ned.disneycharacter.ui.component.CharacterItem
 import com.ned.disneycharacter.ui.component.SearchBar
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel(
-        factory = ViewModelFactory(Injection.provideCharacterUseCase(context = LocalContext.current))
-    ),
+    viewModel: HomeViewModel = koinViewModel(),
     navigateToDetail: (Int) -> Unit
 ) {
     val characters = viewModel.characters.collectAsLazyPagingItems()

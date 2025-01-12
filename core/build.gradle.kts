@@ -52,4 +52,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.koin.android)
+    //implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }

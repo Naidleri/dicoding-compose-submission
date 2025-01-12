@@ -13,21 +13,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ned.disneycharacter.ViewModelFactory
 import com.ned.core.domain.model.Character
-import com.ned.core.injection.Injection
 import com.ned.disneycharacter.ui.common.UiState
 import com.ned.disneycharacter.ui.component.CharacterItem
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FavoriteScreen(
     modifier: Modifier = Modifier,
-    viewModel: FavoriteViewModel = viewModel(
-        factory = ViewModelFactory(Injection.provideCharacterUseCase(context = LocalContext.current))
-    ),
+    viewModel: FavoriteViewModel = koinViewModel(),
     navigateToDetail: (Int) -> Unit
 ) {
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
