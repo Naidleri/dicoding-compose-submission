@@ -32,7 +32,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.compose.AppTheme
 import com.ned.disneycharacter.R
-import com.ned.disneycharacter.ui.common.UiState
+import com.ned.ui.common.UiState
 import com.ned.disneycharacter.ui.component.CharacterSection
 import com.ned.disneycharacter.ui.component.FavoriteButton
 import org.koin.androidx.compose.koinViewModel

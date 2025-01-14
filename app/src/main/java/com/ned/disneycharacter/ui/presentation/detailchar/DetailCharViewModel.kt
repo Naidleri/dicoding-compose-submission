@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ned.core.domain.model.Character
 import com.ned.core.domain.usecase.CharacterUseCase
-import com.ned.disneycharacter.ui.common.UiState
+import com.ned.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first

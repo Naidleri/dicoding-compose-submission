@@ -28,9 +28,9 @@ import com.example.compose.AppTheme
 import com.ned.disneycharacter.ui.navigation.NavigationItem
 import com.ned.disneycharacter.ui.navigation.Screen
 import com.ned.disneycharacter.ui.presentation.detailchar.DetailChar
-import com.ned.disneycharacter.ui.presentation.favorite.FavoriteScreen
 import com.ned.disneycharacter.ui.presentation.home.HomeScreen
 import com.ned.disneycharacter.ui.presentation.profile.ProfileScreen
+import com.ned.favorite.FavoriteScreen
 
 @Composable
 fun DisneyApp(

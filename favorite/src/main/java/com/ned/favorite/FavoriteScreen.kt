@@ -1,4 +1,4 @@
-package com.ned.disneycharacter.ui.presentation.favorite
+package com.ned.favorite
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,9 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ned.core.domain.model.Character
-import com.ned.disneycharacter.ui.common.UiState
 import com.ned.disneycharacter.ui.component.CharacterItem
+import com.ned.ui.common.UiState
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.context.loadKoinModules
 
 @Composable
 fun FavoriteScreen(
@@ -25,6 +26,7 @@ fun FavoriteScreen(
     viewModel: FavoriteViewModel = koinViewModel(),
     navigateToDetail: (Int) -> Unit
 ) {
+    loadKoinModules(favoriteModule)
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {

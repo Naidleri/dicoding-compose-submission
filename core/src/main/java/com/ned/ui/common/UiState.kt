@@ -1,4 +1,4 @@
-package com.ned.disneycharacter.ui.common
+package com.ned.ui.common
 
 sealed class UiState<out T: Any?> {
 

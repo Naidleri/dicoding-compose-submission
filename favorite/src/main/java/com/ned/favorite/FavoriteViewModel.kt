@@ -1,14 +1,14 @@
-package com.ned.disneycharacter.ui.presentation.favorite
+package com.ned.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ned.core.domain.model.Character
 import com.ned.core.domain.usecase.CharacterUseCase
-import com.ned.disneycharacter.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import com.ned.core.domain.model.Character
+import com.ned.ui.common.UiState
 
 class FavoriteViewModel(
     private val characterUseCase: CharacterUseCase

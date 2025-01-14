@@ -9,4 +9,5 @@
     <string name="add_favorite">Tambah Character ke Favorite</string>
     <string name="already_favorite">Hapus Dari Favorite</string>
     <string name="search_placeholder">Cari karakter Disney …</string>
+    <string name="title_favorite">Favorite</string>
 </resources>
