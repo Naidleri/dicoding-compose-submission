@@ -1,5 +1,10 @@
+@file:Suppress("DEPRECATION")
+
 package com.ned.disneycharacter
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -14,8 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -24,13 +29,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.compose.AppTheme
 import com.ned.disneycharacter.ui.navigation.NavigationItem
 import com.ned.disneycharacter.ui.navigation.Screen
 import com.ned.disneycharacter.ui.presentation.detailchar.DetailChar
 import com.ned.disneycharacter.ui.presentation.home.HomeScreen
 import com.ned.disneycharacter.ui.presentation.profile.ProfileScreen
-import com.ned.favorite.FavoriteScreen
 
 @Composable
 fun DisneyApp(
@@ -39,15 +42,16 @@ fun DisneyApp(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val context = LocalContext.current
 
-    Scaffold (
+    Scaffold(
         bottomBar = {
             if (currentRoute != Screen.Detail.route) {
-                BottomBar(navController)
+                BottomBar(navController, context)
             }
         },
         modifier = modifier
-    ) {  innerPadding ->
+    ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
@@ -58,17 +62,12 @@ fun DisneyApp(
                     navigateToDetail = { characterId -> navController.navigate(Screen.Detail.createRoute(characterId)) }
                 )
             }
-            composable (
+            composable(
                 route = Screen.Detail.route,
                 arguments = listOf(navArgument("characterId") { type = NavType.IntType })
             ) {
                 val id = it.arguments?.getInt("characterId") ?: 0
                 DetailChar(id, navigateBack = { navController.navigateUp() })
-            }
-            composable(Screen.Favorite.route) {
-                FavoriteScreen(
-                    navigateToDetail = { characterId -> navController.navigate(Screen.Detail.createRoute(characterId)) }
-                )
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()
@@ -77,20 +76,13 @@ fun DisneyApp(
     }
 }
 
-@Preview (showBackground = true)
-@Composable
-private fun DisneyAppPreview() {
-    AppTheme { 
-        DisneyApp()
-    }
-}
-
 @Composable
 fun BottomBar(
     navController: NavHostController,
+    context: android.content.Context,
     modifier: Modifier = Modifier
 ) {
-    NavigationBar (
+    NavigationBar(
         modifier = modifier
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -129,12 +121,21 @@ fun BottomBar(
                 },
                 selected = currentRoute == item.screen.route,
                 onClick = {
-                    navController.navigate(item.screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+                    if (item.screen.route == Screen.Favorite.route) {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("app://favorite"))
+                        context.startActivity(intent)
+                        if (context is Activity) {
+                            context.overridePendingTransition(0, 0)
+                            context.finish()
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                    } else {
+                        navController.navigate(item.screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 }
             )
