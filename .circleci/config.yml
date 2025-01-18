@@ -6,14 +6,14 @@ orbs:
 jobs:
   build:
     executor: android/android
-    steps:
+     steps:
       - checkout
       - run:
-          name: Install Java 17
+          name: Install OpenJDK 17
           command: |
-            sudo apt-get update
-            sudo apt-get install -y openjdk-17-jdk
-            export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+            sudo apt-get update && sudo apt-get install openjdk-17-jdk
+            sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+            sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
             java -version
       - restore_cache:
           key: android-orb-v1-
