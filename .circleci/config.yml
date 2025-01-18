@@ -11,7 +11,9 @@ jobs:
       - run:
           name: Install Java 17
           command: |
-            sudo update-java-alternatives --set java-1.17.0-openjdk-amd64
+            sudo apt-get update
+            sudo apt-get install -y openjdk-17-jdk
+            export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
             java -version
       - restore_cache:
           key: android-orb-v1-
