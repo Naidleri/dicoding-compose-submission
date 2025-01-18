@@ -1,13 +1,18 @@
 version: 2.1
- 
+
 orbs:
   android: circleci/android@0.2.1
- 
+
 jobs:
   build:
     executor: android/android
     steps:
       - checkout
+      - run:
+          name: Install Java 17
+          command: |
+            sudo update-java-alternatives --set java-1.17.0-openjdk-amd64
+            java -version
       - restore_cache:
           key: android-orb-v1-
       - run:
