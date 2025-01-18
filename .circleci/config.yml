@@ -10,19 +10,26 @@ jobs:
       - checkout
       - restore_cache:
           key: android-orb-v1-
+      
+      # Install Java 17
+      - run:
+          name: Install OpenJDK 17
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y openjdk-17-jdk
+
+      # Set JAVA_HOME to Java 17
+      - run:
+          name: Set JAVA_HOME for Java 17
+          command: |
+            echo "export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $BASH_ENV
+            echo "export PATH=\$JAVA_HOME/bin:\$PATH" >> $BASH_ENV
+            source $BASH_ENV
+
+      # Chmod permissions
       - run:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
-      - run:
-          name: Install Google Cloud SDK Public Key
-          command: |
-            curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/google-archive-keyring.gpg
-            echo "deb [signed-by=/usr/share/keyrings/google-archive-keyring.gpg] https://packages.cloud.google.com/apt cloud-sdk-buster main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-      - run:
-          name: Update and Install Dependencies
-          command: |
-            sudo apt-get update
-            sudo apt-get install google-cloud-sdk
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
