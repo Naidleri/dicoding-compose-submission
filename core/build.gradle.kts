@@ -55,5 +55,8 @@ dependencies {
     implementation (libs.koin.android)
     implementation(libs.koin.androidx.compose)
     implementation (libs.androidx.navigation.compose)
+
+    implementation (libs.android.database.sqlcipher)
+    implementation (libs.androidx.sqlite)
     //implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }
