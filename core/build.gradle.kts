@@ -11,6 +11,7 @@ android {
 
     defaultConfig {
         minSdk = 24
+        buildConfigField("String", "BASE_URL", "\"https://api.disneyapi.dev/\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -32,6 +33,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -39,12 +44,14 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.leakcanary.android.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation (libs.androidx.paging.runtime.ktx)
     implementation (libs.retrofit2.retrofit)
+    implementation(libs.logging.interceptor)
     implementation (libs.converter.gson)
     implementation (libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
