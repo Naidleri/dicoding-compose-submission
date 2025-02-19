@@ -76,6 +76,7 @@ fun FavoriteContent(
             CharacterItem(
                image = item.image,
                 name = item.name,
+                isLoading = false,
                 modifier = Modifier.clickable {
                     navigateToDetail(item.id)
                 }

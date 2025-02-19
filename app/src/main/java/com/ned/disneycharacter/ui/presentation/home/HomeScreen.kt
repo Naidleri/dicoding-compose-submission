@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
@@ -23,6 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.ned.core.domain.model.Character
 import com.ned.disneycharacter.ui.component.CharacterItem
 import com.ned.disneycharacter.ui.component.SearchBar
@@ -120,6 +125,7 @@ fun HomeContent(
                         CharacterItem(
                             image = it.image,
                             name = it.name,
+                            isLoading = false,
                             modifier = Modifier.clickable {
                                 navigateToDetail(it.id)
                             }
@@ -160,13 +166,21 @@ fun HomeContent(
 
 @Composable
 fun LoadingScreen() {
+    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("loading.json"))
+    val progress by animateLottieCompositionAsState(composition)
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        CircularProgressIndicator()
+        LottieAnimation(
+            composition = composition,
+            progress = { progress },
+            modifier = Modifier.size(150.dp)
+        )
     }
 }
+
 
 @Composable
 fun ErrorScreen(message: String) {

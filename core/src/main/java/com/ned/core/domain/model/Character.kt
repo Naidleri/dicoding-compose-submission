@@ -1,5 +1,6 @@
 package com.ned.core.domain.model
 
+@Suppress("PropertyName")
 data class Character (
     var id: Int,
     var name: String,

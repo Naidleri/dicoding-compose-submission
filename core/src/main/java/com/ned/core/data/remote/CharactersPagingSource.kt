@@ -39,12 +39,11 @@ class CharactersPagingSource(private val apiService: ApiService) : PagingSource<
                 )
             }
 
-            val nextPage = response.info.nextPage?.let { url ->
-                url.substringAfter("page=").substringBefore("&").toIntOrNull()
-            }
-            val prevPage = response.info.previousPage?.let { url ->
-                url.substringAfter("page=").substringBefore("&").toIntOrNull()
-            }
+            val nextPage = response.info.nextPage?.substringAfter("page=")?.substringBefore("&")
+                ?.toIntOrNull()
+            val prevPage =
+                response.info.previousPage?.substringAfter("page=")?.substringBefore("&")
+                    ?.toIntOrNull()
 
             LoadResult.Page(
                 data = domainCharacter,

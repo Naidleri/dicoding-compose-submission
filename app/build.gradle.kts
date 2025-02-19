@@ -22,11 +22,13 @@ android {
 
     buildTypes {
         release {
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro")
+        }
+        debug {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -70,6 +72,9 @@ dependencies {
     implementation(libs.androidx.paging.compose)
     implementation (libs.koin.android)
     implementation (libs.koin.androidx.compose)
+
+    implementation(libs.lottie.compose)
+    implementation(libs.compose.shimmer)
 
     implementation(project(":core"))
 }

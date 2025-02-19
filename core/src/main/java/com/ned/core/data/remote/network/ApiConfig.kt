@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+@Suppress("LocalVariableName")
 object ApiConfig {
     private const val HOSTNAME = "api.disneyapi.dev"
 

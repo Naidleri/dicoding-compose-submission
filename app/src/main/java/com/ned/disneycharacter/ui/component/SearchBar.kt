@@ -14,7 +14,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose.AppTheme
+import com.ned.disneycharacter.ui.theme.AppTheme
 import com.ned.disneycharacter.R
 
 @OptIn(ExperimentalMaterial3Api::class)

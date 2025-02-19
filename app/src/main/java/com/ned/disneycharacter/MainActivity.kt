@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.rememberNavController
-import com.example.compose.AppTheme
+import com.ned.disneycharacter.ui.theme.AppTheme
 import com.ned.disneycharacter.ui.navigation.Screen
 
 class MainActivity : ComponentActivity() {
