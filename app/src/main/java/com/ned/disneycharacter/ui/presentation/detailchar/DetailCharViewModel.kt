@@ -25,14 +25,11 @@ class DetailCharViewModel (
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             try {
-                Log.d("DetailCharViewModel", "Fetching character with id: $id")
-
                 val dataItem = characterUseCase.getCharacterById(id).first()
-                Log.d("DetailCharViewModel", "Received data: $dataItem")
                 _uiState.value = UiState.Success(dataItem)
 
                 val isFav = characterUseCase.isFavoriteCharacter(id)
-                Log.d("DetailCharViewModel", "Is Favorite: $isFav")
+
                 _isFavorite.value = isFav
 
             } catch (e: Exception) {

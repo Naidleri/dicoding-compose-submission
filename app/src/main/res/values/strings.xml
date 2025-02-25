@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">Disney Character</string>
     <string name="menu_home">Home</string>
-    <string name="menu_favorite">Favorite</string>
     <string name="menu_profile">Profile</string>
-    <string name="back">Back</string>
     <string name="name_profile">Haris Firman Ardiansyah</string>
     <string name="email_profile">harisfirman387@gmail.com</string>
     <string name="add_favorite">Tambah Character ke Favorite</string>
     <string name="already_favorite">Hapus Dari Favorite</string>
     <string name="search_placeholder">Cari karakter Disney …</string>
-    <string name="title_favorite">Favorite</string>
+    <string name="favorite">Favorite</string>
 </resources>

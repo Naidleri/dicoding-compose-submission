@@ -1,6 +1,5 @@
 package com.ned.disneycharacter.ui.presentation.home
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -100,17 +99,16 @@ fun HomeContent(
 ) {
     val loadState = character.loadState
 
-    Log.d("HomeContent", "LoadState refresh: ${loadState.refresh}")
-    Log.d("HomeContent", "LoadState append: ${loadState.append}")
-
-    when {
-        loadState.refresh is LoadState.Loading -> {
+    when (loadState.refresh) {
+        is LoadState.Loading -> {
             LoadingScreen()
         }
-        loadState.refresh is LoadState.Error -> {
+
+        is LoadState.Error -> {
             val error = (loadState.refresh as LoadState.Error).error
             ErrorScreen(message = error.localizedMessage ?: "Unknown error")
         }
+
         else -> {
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(160.dp),

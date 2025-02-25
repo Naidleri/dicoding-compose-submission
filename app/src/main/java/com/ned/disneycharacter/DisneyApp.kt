@@ -95,7 +95,7 @@ fun BottomBar(
                 screen = Screen.Home
             ),
             NavigationItem(
-                title = stringResource(R.string.menu_favorite),
+                title = stringResource(R.string.favorite),
                 icon = Icons.Default.Favorite,
                 screen = Screen.Favorite
             ),

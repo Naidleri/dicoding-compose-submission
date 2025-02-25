@@ -1,6 +1,5 @@
 package com.ned.disneycharacter.ui.presentation.detailchar
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,11 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.ned.disneycharacter.ui.theme.AppTheme
 import com.ned.disneycharacter.R
-import com.ned.ui.common.UiState
 import com.ned.disneycharacter.ui.component.CharacterSection
 import com.ned.disneycharacter.ui.component.FavoriteButton
+import com.ned.disneycharacter.ui.theme.AppTheme
+import com.ned.ui.common.UiState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -43,7 +42,6 @@ fun DetailChar(
     viewModel: DetailCharViewModel = koinViewModel(),
     navigateBack: () -> Unit
 ) {
-    Log.d("DetailChar", "Received charId: $charId")
     val uiState by viewModel.uiState.collectAsState()
     val isFavorite by viewModel.isFavorite.collectAsState()
 
@@ -119,7 +117,7 @@ fun DetailCharContent(
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = stringResource(R.string.back),
+                contentDescription = ("back"),
                 modifier = Modifier
                     .padding(start = 16.dp, top = 16.dp)
                     .clickable {

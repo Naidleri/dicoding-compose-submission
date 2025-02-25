@@ -1,6 +1,6 @@
 package com.ned.disneycharacter.ui.navigation
 
-@Suppress("ConvertObjectToDataObject", "ConvertObjectToDataObject")
+@Suppress("ConvertObjectToDataObject")
 sealed class Screen (val route : String) {
     object Home : Screen("home")
     object Detail : Screen("home/{characterId}") {
