@@ -112,3 +112,11 @@
 -dontwarn jdk.internal.**
 -dontwarn sun.misc.Unsafe
 
+# Jaga semua class di package domain dan UI
+-keep class com.ned.core.domain.model.** { *; }
+-keep class com.ned.core.domain.repository.** { *; }
+-keep class com.ned.core.domain.usecase.** { *; }
+-keep class com.ned.ui.common.** { *; }
+
+# Jaga class untuk Koin DI
+-keep class com.ned.core.injection.CoreModuleKt { *; }
