@@ -50,6 +50,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    coreLibraryDesugaring (libs.desugar.jdk.libs)
 
     implementation (libs.androidx.paging.runtime.ktx)
     implementation (libs.retrofit2.retrofit)

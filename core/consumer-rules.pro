@@ -102,3 +102,13 @@
 -keepattributes *Annotation*
 -keep class kotlin.Metadata { *; }
 -dontwarn kotlin.Metadata
+
+
+# Jangan lakukan optimasi pada string concatenation
+-dontoptimize
+-keep class java.lang.invoke.** { *; }
+
+# Core Library Desugaring untuk Java 9+ features
+-dontwarn jdk.internal.**
+-dontwarn sun.misc.Unsafe
+
