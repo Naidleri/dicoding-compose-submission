@@ -9,3 +9,15 @@
 
 # Jaga Composable functions (jika pakai Jetpack Compose)
 -keep @androidx.compose.runtime.Composable class * { *; }
+
+# Keep all domain model classes
+-keep class com.ned.core.domain.model.** { *; }
+
+# Keep repository interfaces
+-keep class com.ned.core.domain.repository.** { *; }
+
+# Keep all usecase classes
+-keep class com.ned.core.domain.usecase.** { *; }
+
+# Keep Koin module definitions
+-keep class com.ned.core.injection.** { *; }
