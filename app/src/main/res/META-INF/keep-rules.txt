@@ -1,0 +1,4 @@
+-keep class com.ned.core.domain.model.** { *; }
+-keep class com.ned.core.domain.repository.** { *; }
+-keep class com.ned.core.domain.usecase.** { *; }
+-keep class com.ned.core.injection.** { *; }
